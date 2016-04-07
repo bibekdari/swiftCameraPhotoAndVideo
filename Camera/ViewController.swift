@@ -30,21 +30,29 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureSession()
+        
+    }
+    func configureSession(){
+        if let _ = captureSession where captureSession.running {
+            captureSession.stopRunning()
+        }
         captureSession = AVCaptureSession()
         captureSession.sessionPreset = AVCaptureSessionPresetPhoto
         
         self.sessionQueue = dispatch_queue_create("camera_session", DISPATCH_QUEUE_SERIAL)
         
-        captureDevice = getDevice(.Back)
+        captureDevice = getDevice(currentPosition)
         beginSession()
         addAudioInputAndStillImageOutputInSession()
         //let recordingDelegate:AVCaptureFileOutputRecordingDelegate? = self
         
         videoFileOutput = AVCaptureMovieFileOutput()
         self.captureSession.addOutput(videoFileOutput)
-        
     }
+    
     @IBAction func takeVideoAction(sender: AnyObject) {
+        captureSession.stopRunning()
         if viewX.hidden{
             viewX.hidden = false
             return
@@ -66,7 +74,7 @@ class ViewController: UIViewController {
                 button.setTitle("Recording", forState: .Normal)
                 
                 //let filePath = NSURL(fileURLWithPath: "filePath")
-                
+                captureSession.startRunning()
                 self.videoFileOutput!.startRecordingToOutputFileURL(filePath, recordingDelegate: self)
             }
             self.recording = !self.recording
@@ -74,7 +82,7 @@ class ViewController: UIViewController {
             
             button.setTitle("Try Next", forState: .Normal)
             let connection = self.stillImageOutput!.connectionWithMediaType(AVMediaTypeVideo)
-            
+            captureSession.startRunning()
             stillImageOutput?.captureStillImageAsynchronouslyFromConnection(connection, completionHandler: { (imageDataSampleBuffer, error) in
                 if error == nil {
                     let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageDataSampleBuffer)
@@ -98,6 +106,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func avswitch(sender: UIButton) {
+        captureSession.stopRunning()
         if self.recordingModePhoto {
             sender.setTitle("Video", forState: .Normal)
             captureSession.sessionPreset = AVCaptureSessionPresetHigh
@@ -106,6 +115,7 @@ class ViewController: UIViewController {
             captureSession.sessionPreset = AVCaptureSessionPresetPhoto
         }
         self.recordingModePhoto = !self.recordingModePhoto
+        captureSession.startRunning()
     }
     
     @IBAction func changeCamera(sender: UIButton) {
@@ -116,7 +126,8 @@ class ViewController: UIViewController {
                 captureSession.removeInput(try AVCaptureDeviceInput(device: backDevice))
                 let frontDevice = getDevice(.Front)
                 self.captureDevice = frontDevice
-                beginSession()
+                currentPosition = .Front
+                configureSession()
                 sender.setTitle("Front", forState: .Normal)
             }catch{
                 print("Cant remove/Add input: \(error)")
@@ -128,7 +139,8 @@ class ViewController: UIViewController {
                 
                 let backDevice = getDevice(.Front)
                 self.captureDevice = backDevice
-                beginSession()
+                currentPosition = .Back
+                configureSession()
                 sender.setTitle("back", forState: .Normal)
             }catch{
                 print("Cant remove input: \(error)")
