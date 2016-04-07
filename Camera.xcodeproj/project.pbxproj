@@ -12,6 +12,7 @@
 		4304AC5B1CB368C400ED5052 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4304AC591CB368C400ED5052 /* Main.storyboard */; };
 		4304AC5D1CB368C400ED5052 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4304AC5C1CB368C400ED5052 /* Assets.xcassets */; };
 		4304AC601CB368C400ED5052 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4304AC5E1CB368C400ED5052 /* LaunchScreen.storyboard */; };
+		4304AC861CB3DD6A00ED5052 /* AVPlayC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4304AC851CB3DD6A00ED5052 /* AVPlayC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		4304AC5C1CB368C400ED5052 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4304AC5F1CB368C400ED5052 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4304AC611CB368C400ED5052 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4304AC851CB3DD6A00ED5052 /* AVPlayC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVPlayC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 				4304AC5C1CB368C400ED5052 /* Assets.xcassets */,
 				4304AC5E1CB368C400ED5052 /* LaunchScreen.storyboard */,
 				4304AC611CB368C400ED5052 /* Info.plist */,
+				4304AC851CB3DD6A00ED5052 /* AVPlayC.swift */,
 			);
 			path = Camera;
 			sourceTree = "<group>";
@@ -137,6 +140,7 @@
 			files = (
 				4304AC581CB368C400ED5052 /* ViewController.swift in Sources */,
 				4304AC561CB368C400ED5052 /* AppDelegate.swift in Sources */,
+				4304AC861CB3DD6A00ED5052 /* AVPlayC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -252,6 +256,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Camera/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = dari.Camera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -263,6 +268,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Camera/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = dari.Camera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -288,6 +294,7 @@
 				4304AC661CB368C400ED5052 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
