@@ -13,17 +13,20 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var viewX: UIView!
-    
-    @IBOutlet weak var button: UIButton!
+    @IBOutlet weak var progressView: UIProgressView!
+    @IBOutlet weak var labelTime: UILabel!
+    @IBOutlet weak var buttonCapture: UIButton!
     
     var stillImageOutput: AVCaptureStillImageOutput?
     var previewLayer: AVCaptureVideoPreviewLayer?
     var videoFileOutput: AVCaptureMovieFileOutput?
     var captureSession: AVCaptureSession!
     var captureDevice: AVCaptureDevice?
-    var recordingModePhoto = true
+    var recordingModePhoto = false
     var recording = false
     var videoFilePath: NSURL!
+    var timer = NSTimer()
+    var timeCounter = 0
     
     var currentPosition: AVCaptureDevicePosition = .Back
     
@@ -32,6 +35,27 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         reloadCamera()
+        if recordingModePhoto {
+            progressView.hidden = true
+            labelTime.hidden = true
+        }else{
+            buttonCapture.setTitle("Record", forState: .Normal)
+        }
+    }
+    
+    override func prefersStatusBarHidden() -> Bool {
+        return true
+    }
+    
+    func updateLabel(){
+        timeCounter += 1
+        labelTime.text = "\(timeCounter)/20"
+        progressView.progress = progressView.progress + 0.05
+        if timeCounter == 20 {
+            self.timer.invalidate()
+            self.videoFileOutput?.stopRecording()
+            buttonCapture.setTitle("Record", forState: .Normal)
+        }
     }
     
     func reloadCamera(){
@@ -64,10 +88,9 @@ class ViewController: UIViewController {
         
         previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         self.viewX.layer.addSublayer(previewLayer!)
-        self.viewX.bringSubviewToFront(button)
+        //self.viewX.bringSubviewToFront(button)
         self.viewX.bringSubviewToFront(self.imageView)
         previewLayer?.frame = self.view.layer.frame
-        
         captureSession.startRunning()
     }
     
@@ -101,7 +124,14 @@ class ViewController: UIViewController {
             if self.recording {
                 self.videoFileOutput?.stopRecording()
                 sender.setTitle("Record", forState: .Normal)
+                self.timer.invalidate()
             }else {
+                
+                self.timer.invalidate()
+                self.timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(updateLabel), userInfo: nil, repeats: true)
+                self.timeCounter = 0
+                self.progressView.progress = 0.0
+                
                 recording = true
                 sender.setTitle("Recording", forState: .Normal)
                 if captureSession.canAddOutput(videoFileOutput){

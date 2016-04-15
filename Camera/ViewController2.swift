@@ -58,9 +58,9 @@ class ViewController2: UIViewController, AVCaptureFileOutputRecordingDelegate {
     
     @IBAction func takeVideoAction(sender: AnyObject) {
         
-        var recordingDelegate:AVCaptureFileOutputRecordingDelegate? = self
+        let recordingDelegate:AVCaptureFileOutputRecordingDelegate? = self
         
-        var videoFileOutput = AVCaptureMovieFileOutput()
+        let videoFileOutput = AVCaptureMovieFileOutput()
         self.captureSession.addOutput(videoFileOutput)
         
         let filePath = NSURL(fileURLWithPath: "filePath")

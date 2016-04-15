@@ -14,10 +14,10 @@ class AVPlayC: AVPlayerViewController {
     var url: NSURL?
     override func viewDidLoad() {
         super.viewDidLoad()
-        //self.player = AVPlayer(URL: url!)
+        self.player = AVPlayer(URL: url!)
         print(url)
     }
     override func viewDidAppear(animated: Bool) {
-        //player?.play()
+        player?.play()
     }
 }
